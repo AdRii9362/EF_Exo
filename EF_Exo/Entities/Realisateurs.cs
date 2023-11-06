@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 
 namespace EF_Exo.Entities
 {
+    // Classe Realisateurs héritant de la classe Personnes
     public class Realisateurs : Personnes
     {
-        public List<Films> Films { get; set; } // one 2 many avec acteurs
-     
+        public List<Films> Films { get; set; } // Relation One-to-Many avec la classe Films
     }
+
 }

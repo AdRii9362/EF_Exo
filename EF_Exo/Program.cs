@@ -13,6 +13,23 @@ using System.Linq;
 //6. dans la console de package, migrer vers la DB => add-migration NomDeLa Migration // update-database
 //7. on cree un objet film
 
+#region Explication Many2Many et One2Many
+//Chaque film n’aura qu’un seul réalisateur, mais plusieurs acteurs possibles.
+//2) Effectuer les changements nécessaires dans la classe Film et mettre à jour la base
+//de données pour qu’elle puisse accueillir un nouveau jeu de données.
+//3) Afficher tous les films avec réalisateur et acteurs.
+
+/*La relation One-to-Many entre Films et Realisateurs est établie à l'aide de la propriété Realisateurs dans la classe Films. 
+ Un film est associé à un seul réalisateur, ce qui est représenté par la propriété RealisateursID qui est la clé étrangère faisant référence à la table Realisateurs.
+
+La relation Many-to-Many entre Films et Acteurs est mise en place à l'aide de la classe intermédiaire MM_Films_Acteurs. 
+La liste ActeursFilms dans la classe Films représente la collection des acteurs associés à un film donné. Un film peut avoir plusieurs acteurs, et un acteur peut jouer dans plusieurs films.
+
+En utilisant ces relations, vous pouvez établir des liens entre les entités Films, Realisateurs, Acteurs et MM_Films_Acteurs dans votre base de données, 
+ce qui vous permet de modéliser efficacement les relations complexes entre ces différentes entités.*/
+
+#endregion
+
 DataContext dc = new DataContext();
 
 
@@ -131,7 +148,3 @@ Films f = new Films { };
 
 
 
-//Chaque film n’aura qu’un seul réalisateur, mais plusieurs acteurs possibles.
-//2) Effectuer les changements nécessaires dans la classe Film et mettre à jour la base
-//de données pour qu’elle puisse accueillir un nouveau jeu de données.
-//3) Afficher tous les films avec réalisateur et acteurs.
