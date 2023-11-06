@@ -23,12 +23,6 @@ namespace EF_Exo.Configs
             
             builder.Property(f=>f.Genre).IsRequired().HasMaxLength(100);
 
-            //builder.Property(f=> f.Realisateurs).IsRequired().HasMaxLength(100);
-
-
-
-
-
             builder.HasData(
                 new Films
                 {
@@ -36,50 +30,59 @@ namespace EF_Exo.Configs
                     Titre = "Star Wars : Un nouvel espoir",
                     AnneeSortie = 1977,
                     Genre = "Science-Fiction",
+                    RealisateursID = 1
                 },
                 new Films
                 {
                     Id = 2,
                     Titre = "Star Wars : L'empire contre-attaque",
                     AnneeSortie = 1980,
-                    Genre = "Science-Fiction"
+                    Genre = "Science-Fiction",
+                    RealisateursID = 1
+
+
                 },
                 new Films
                 {
                     Id = 3,
                     Titre = "Star Wars : Le retour du Jedi",
                     AnneeSortie = 1983,
-                    Genre = "Science-Fiction"
+                    Genre = "Science-Fiction",
+                    RealisateursID = 1
                 },
                 new Films
                 {
                     Id = 4,
                     Titre = "Hooligans",
                     AnneeSortie = 2005,
-                    Genre = "Société"
+                    Genre = "Société",
+                    RealisateursID = 2
                 },
                 new Films
                 {
                     Id = 5,
                     Titre = "LOTR - La communauté de l'anneau",
                     AnneeSortie = 2001,
-                    Genre = "Heroic-Fantasy"
+                    Genre = "Heroic-Fantasy",
+                    RealisateursID = 3
                 },
                 new Films
                 {
                     Id = 6,
                     Titre = "LOTR - Les deux tours",
                     AnneeSortie = 2002,
-                    Genre = "Heroic-Fantasy"
+                    Genre = "Heroic-Fantasy",
+                    RealisateursID = 3
                 },
                 new Films
                 {
                     Id = 7,
                     Titre = "LOTR - Le retour du roi",
                     AnneeSortie = 2003,
-                    Genre = "Heroic-Fantasy"
+                    Genre = "Heroic-Fantasy",
+                    RealisateursID = 3
                 }
-                );
+                ) ;
 
         }
 
