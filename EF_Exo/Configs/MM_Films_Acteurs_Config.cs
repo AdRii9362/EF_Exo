@@ -14,17 +14,17 @@ namespace EF_Exo.Configs
         public void Configure(EntityTypeBuilder<MM_Films_Acteurs> builder)
         {
 
-            builder.HasKey(fa => new { fa.ActeursID, fa.FilmsID });
+            builder.HasKey(fa => new { fa.ActeursID, fa.FilmsID }); //MANY 2 MANY ACTEURS FILMS
 
-            builder.HasOne(fa => fa.Acteurs)
+            builder.HasOne(fa => fa.Acteurs) //MANY 2 MANY ACTEURS FILMS
                    .WithMany(a => a.FilmsActeurs)
                    .HasForeignKey(fk => fk.ActeursID);
 
-            builder.HasOne(af => af.Films)
+            builder.HasOne(af => af.Films) //MANY 2 MANY ACTEURS FILMS
                    .WithMany(f => f.ActeursFilms)
                    .HasForeignKey(fk => fk.FilmsID);
 
-            builder.HasData
+            builder.HasData // CONSTRUCTION DES DONNEES MM_FILMS_ACTEURS
                 (
                 new MM_Films_Acteurs
                 {

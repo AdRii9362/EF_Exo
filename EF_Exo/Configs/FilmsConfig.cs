@@ -13,20 +13,20 @@ namespace EF_Exo.Configs
     {
         public void Configure(EntityTypeBuilder<Films> builder)
         {
-            builder.HasKey(f => f.Id);
-            builder.Property(f => f.Id).ValueGeneratedOnAdd();
+            builder.HasKey(f => f.Id); //.HASKEY => DECLARATION DE LA CLEF PRIMAIRE
+            builder.Property(f => f.Id).ValueGeneratedOnAdd(); // PROPRIETES DE LA CLE PRIMARE: .VALUEGENERATEDONADD = INCREMENTATION AUTO
 
-            builder.HasIndex(f => f.Titre);
-            builder.Property(f=> f.Titre).IsRequired().HasMaxLength(100);
+            builder.HasIndex(f => f.Titre).IsUnique(); // ISUNIQUE EST UNIQUEMENT APPLICABLE SUR UN INDEX, ON DECLARE DONC LA VARIABLE EN .HASINDEX POUR Y AJOUTER ISUNIQUE
+            builder.Property(f=> f.Titre).IsRequired().HasMaxLength(100);// ISREQUIRED = NOT NULL , HASMAXLENGHT() = ON LIMITE LA TAILLE DU STRING
 
-            builder.HasCheckConstraint("CK_AnneeSortie", "AnneeSortie>1975");
+            builder.HasCheckConstraint("CK_AnneeSortie", "AnneeSortie>1975");// HASCHECKCONTRAINT PERMET D APPLIQUER UNE CONTRAINTE DE VERIFICATION, ON NOMME LA CONTRAINTE ET ON REALSIE LA CONTRAINTE
             
             builder.Property(f=>f.Genre).IsRequired().HasMaxLength(100);
 
-            builder.HasData(
-                new Films
+            builder.HasData( //ON VA COMPLETER LES DONNEES DANS NOS VARIABLES
+                new Films //NOUVEL OBJET FILMS
                 {
-                    Id = 1,
+                    Id = 1, //VARIABLE DE L ENTITEE FILMS 
                     Titre = "Star Wars : Un nouvel espoir",
                     AnneeSortie = 1977,
                     Genre = "Science-Fiction",
