@@ -36,7 +36,7 @@ DataContext dc = new DataContext();
 #region ajouter un film
 //Ajouter le film “Pacific Rim” (Acteur principal : Charlie Hunnam, Réal : Guillermo Del Toro, Année : 2013,Genre: Action)
 
-Films f = new Films { };
+//Films f = new Films { };
 
 //Personnes a = new Acteurs { };
 //Personnes r = new Realisateurs { };
@@ -144,6 +144,58 @@ Films f = new Films { };
 
 
 #endregion
+//Methode 1
+
+// Requête pour récupérer les informations des films, réalisateurs et acteurs associés
+var TabFilmRealisateurActeur = from f in dc.Films
+                               join r in dc.Realisateurs on f.RealisateursID equals r.ID // Jointure entre Films et Realisateurs basée sur RealisateursID et ID
+                               from fa in dc.MM_Films_Acteurs
+                               join a in dc.Acteurs on fa.ActeursID equals a.ID // Jointure entre MM_Films_Acteurs et Acteurs basée sur ActeursID et ID
+                               where fa.FilmsID == f.Id // Filtre pour s'assurer que les IDs de films correspondent
+                               select new
+                               {
+                                   TitreFilm = f.Titre, // Sélection du titre du film
+                                   GenreFilm = f.Genre, // Sélection du genre du film
+                                   DateAnneeSortie = f.AnneeSortie, // Sélection de l'année de sortie du film
+                                   Realisateur = r.Prenom + " " + r.Nom, // Concaténation du prénom et du nom du réalisateur
+                                   Acteur = a.Prenom + " " + a.Nom // Concaténation du prénom et du nom de l'acteur
+                               };
+
+// Affichage des résultats à l'aide d'une boucle foreach
+foreach (var items in TabFilmRealisateurActeur)
+{
+    Console.WriteLine($"Film : {items.TitreFilm}|Genre : {items.GenreFilm}| Annee de sortie : {items.DateAnneeSortie}| Realisateur : {items.Realisateur} | Acteur : {items.Acteur}"); // Affichage des détails du film, du réalisateur et de l'acteur associé
+}
+
+Console.WriteLine();
+
+//Methode 2
+
+// Requête pour récupérer les informations des films, réalisateurs et acteurs associés
+var TabFilmRealisateurActeurs = dc.Films
+    .Join(dc.Realisateurs, f => f.RealisateursID, r => r.ID, (f, r) => new { Film = f, Realisateur = r }) // Jointure entre Films et Realisateurs
+    .Join(dc.MM_Films_Acteurs, fr => fr.Film.Id, fa => fa.FilmsID, (fr, fa) => new { fr.Film, fr.Realisateur, MM_Films_Acteurs = fa }) // Jointure entre la première jointure et MM_Films_Acteurs
+    .Join(dc.Acteurs, fra => fra.MM_Films_Acteurs.ActeursID, a => a.ID, (fra, a) => new { fra.Film, fra.Realisateur, fra.MM_Films_Acteurs, Acteur = a }) // Jointure entre la deuxième jointure et Acteurs
+    .Where(fraa => fraa.Film.Id == fraa.MM_Films_Acteurs.FilmsID) // Filtre pour s'assurer que les IDs de films correspondent
+    .Select(result => new
+    {
+        result.Film.Titre, // Sélection du titre du film
+        result.Film.Genre,
+        result.Film.AnneeSortie,
+        Realisateur = result.Realisateur.Prenom + " " + result.Realisateur.Nom, // Concaténation du prénom et du nom du réalisateur
+        Acteur = result.Acteur.Prenom + " " + result.Acteur.Nom // Concaténation du prénom et du nom de l'acteur
+    });
+
+// Affichage des résultats à l'aide d'une boucle foreach
+foreach (var item in TabFilmRealisateurActeurs)
+{
+    Console.WriteLine($"Film : {item.Titre}, Annee de sortie :{item.AnneeSortie},Genre du film : {item.Genre}, Réalisateur : {item.Realisateur}, Acteur : {item.Acteur}"); // Affichage des détails du film, du réalisateur et de l'acteur associé
+}
+
+
+
+
+
 
 
 
